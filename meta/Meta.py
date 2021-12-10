@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 '''
-@Description : 神经元实现
+@Description : 神经元实现，已实现反向传播
 @Date        : 2021/12/11 03:19:08
 @Author      : ifish
 @version     : 1.0
@@ -11,6 +11,14 @@ import numpy as np
 
 
 class AddMeta:
+    '''
+    @description: 加法神经元
+    ------------
+    @param:
+    ------
+    @Returns:
+    --------
+    '''
     def __init__(self) -> None:
         pass
 
@@ -25,6 +33,14 @@ class AddMeta:
 
 
 class MulMeta:
+    '''
+    @description: 乘法神经元
+    ------------
+    @param:
+    ------
+    @Returns:
+    --------
+    '''
     def __init__(self) -> None:
         self.x = None
         self.y = None
@@ -42,6 +58,14 @@ class MulMeta:
     
 
 class DivMeta:
+    '''
+    @description: 除法神经元
+    ------------
+    @param:
+    ------
+    @Returns:
+    --------
+    '''
     def __init__(self) -> None:
         self.x = None
 
@@ -56,6 +80,14 @@ class DivMeta:
 
 
 class ExpMeta:
+    '''
+    @description: 指数神经元
+    ------------
+    @param:
+    ------
+    @Returns:
+    --------
+    '''
     def __init__(self) -> None:
         self.x = None
 
@@ -70,6 +102,14 @@ class ExpMeta:
 
 
 class DotMeta:
+    '''
+    @description: 点积神经元
+    ------------
+    @param:
+    ------
+    @Returns:
+    --------
+    '''
     def __init__(self) -> None:
         self.x = None
         self.w = None
