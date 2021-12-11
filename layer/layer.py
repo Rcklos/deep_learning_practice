@@ -8,6 +8,7 @@
 '''
 import numpy as np
 import math
+from function.function import softmax, cross_entropy_error
 
 class ReluLayer:
     '''
@@ -76,18 +77,16 @@ class AffineLayer:
     @Returns:
     --------
     '''
-    def __init__(self) -> None:
+    def __init__(self, w, b) -> None:
         self.x = None
-        self.w = None
-        self.b = None
+        self.w = w
+        self.b = b
         self.dw = None
         self.db = None
     
-    def forward(self, x, w, b = 0):
+    def forward(self, x):
         self.x = x
-        self.w = w
-        self.b = b
-        out = np.dot(x, w) + b
+        out = np.dot(x, self.w) + self.b
         return out
 
     def backward(self, dout):
@@ -97,3 +96,19 @@ class AffineLayer:
         return dx
     
 
+class SoftmaxWithLoss:
+    def __init__(self) -> None:
+        self.loss = None
+        self.y = None
+        self.t = None
+    
+    def forward(self, x, t):
+        self.t = t
+        self.y = softmax(x)
+        self.loss = cross_entropy_error(self.y, self.t)
+        return self.loss
+
+    def backward(self, dout = 1):
+        batch_size = self.t.shape[0]
+        dx = (self.y - self.t) / batch_size
+        return dx
