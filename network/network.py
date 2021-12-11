@@ -26,12 +26,6 @@ class TowLayerNet:
         self.layers['Affine2'] = AffineLayer(self.params['w2'], self.params['b2'])
         self.lastLayer = SoftmaxWithLoss()
 
-    def batch_data(self):
-        pass
-
-    def train(self):
-        pass
-
     def saveNetWork(self, path):
         pass
     
