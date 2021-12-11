@@ -6,8 +6,7 @@
 @Author      : ifish
 @version     : 1.0
 '''
-
-from typing_extensions import OrderedDict
+from collections import OrderedDict
 from layer.layer import *
 import numpy as np
 

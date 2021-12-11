@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+'''
+@Description : 数据集获取库
+@Date        : 2021/12/11 23:31:45
+@Author      : ifish
+@version     : 1.0
+'''
+
 from fer2013 import DataSet
 import numpy as np
 
@@ -13,8 +22,8 @@ def fetch_fer2013(x_num = 5, t_num = 5):
     dataset['test_img'] = np.array(test_imgs).reshape(-1, img_size)
     
     # label
-    dataset['train_label'] = np.eye(10)[train_labels]
-    dataset['test_label'] = np.eye(10)[test_labels]
+    dataset['train_label'] = np.eye(7)[train_labels]
+    dataset['test_label'] = np.eye(7)[test_labels]
 
     return dataset
 
