@@ -14,9 +14,9 @@ import numpy as np
 class TowLayerNet:
     def __init__(self, input_size, hiden_size, output_size, weight_init_std=0.01) -> None:
         self.params = {}
-        self.params['w1'] = weight_init_std * np.random.randn(input_size, hiden_size)
+        self.params['w1'] = weight_init_std * np.random.randn(input_size, hiden_size) / np.sqrt(input_size)
         self.params['b1'] = np.zeros(hiden_size)
-        self.params['w2'] = weight_init_std * np.random.randn(hiden_size, output_size)
+        self.params['w2'] = weight_init_std * np.random.randn(hiden_size, output_size) / np.sqrt(hiden_size)
         self.params['b2'] = np.zeros(output_size)
 
         self.layers = OrderedDict()

@@ -60,7 +60,7 @@ class SigmoidLayer:
         pass
 
     def forward(self, x):
-        self.out = 1 / (1 + math.exp(-x))
+        self.out = 1 / (1 + np.exp(-x))
         return self.out
     
     def backward(self, dout):
