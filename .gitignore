@@ -1,2 +1,3 @@
 dataset/mnist/*
 dataset/fer2013/*
+weight/*
