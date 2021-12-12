@@ -141,13 +141,7 @@ def simple_test_fer2013():
 
     acc = network.accuracy(x_img, x_label)
     print('train acc: %.2f%%' % (acc * 100))
-    acc = network.accuracy(x_img, x_label)
-    print('train acc: %.2f%%' % (acc * 100))
-    acc = network.accuracy(x_img, x_label)
-    print('train acc: %.2f%%' % (acc * 100))
 
-    acc = network.accuracy(t_img, t_label)
-    print('test acc: %.2f%%' % (acc * 100))
     acc = network.accuracy(t_img, t_label)
     print('test acc: %.2f%%' % (acc * 100))
 
@@ -218,10 +212,6 @@ def simple_test_weight():
         print('weight file not found!')
         return
         
-    acc = network.accuracy(x_img, x_label)
-    print('train acc: %.2f%%' % (acc * 100))
-    acc = network.accuracy(x_img, x_label)
-    print('train acc: %.2f%%' % (acc * 100))
     acc = network.accuracy(x_img, x_label)
     print('train acc: %.2f%%' % (acc * 100))
     acc = network.accuracy(t_img, t_label)
