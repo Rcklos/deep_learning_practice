@@ -9,30 +9,36 @@
 
 import os
 import sys
-
-from matplotlib import lines
 sys.path.append(os.path.abspath('.'))
 sys.path.append(os.path.abspath('./dataset'))
 
+from matplotlib import lines
 import pickle
 import numpy as np
-from network.network import AdaGrad, TowLayerNet
+from network.network import AdaGrad, TowLayerNet, TensorFlowTowLayerNetWork
 from dataset.dataset import fetch_fer2013
 import matplotlib.pyplot as plt
 from numpy.lib.function_base import average
 
 
-def simple_test_fer2013():
+def fetch_dataset():
     print('\r装配FER2013数据集...', end='')
-    dataset = fetch_fer2013(x_num=99999999, t_num=100)
+    dataset = fetch_fer2013(x_num=999999, t_num=999999)
+    global x_img
+    global x_label
+    global t_img
+    global t_label
     x_img = dataset['train_img']
     x_label = dataset['train_label']
     t_img = dataset['test_img']
     t_label = dataset['test_label']
     print('\r装配FER2013数据集完成!')
+
+
+def simple_test_fer2013():
     # network
     img_size = 48 * 48 * 1
-    network = TowLayerNet(input_size=img_size, hiden_size=100,  output_size=7)
+    network = TowLayerNet(input_size=img_size, hiden_size=128,  output_size=7)
     optimizer = AdaGrad()
     train_size = len(x_img)
     batch_size = 100
@@ -160,14 +166,6 @@ def simple_test_fer2013():
     
 
 def simple_test_weight():
-    print('\r装配FER2013数据集...', end='')
-    dataset = fetch_fer2013(x_num=99999999, t_num=100)
-    x_img = dataset['train_img']
-    x_label = dataset['train_label']
-    t_img = dataset['test_img']
-    t_label = dataset['test_label']
-    print('\r装配FER2013数据集完成!')
-
     img_size = 48 * 48 * 1
     network = TowLayerNet(input_size=img_size, hiden_size=100,  output_size=7)
     optimizer = AdaGrad()
@@ -242,6 +240,65 @@ def simple_test_weight():
     plt.show()
 
 
+def tensor_test_fer2013():
+    img_size = 48 * 48 * 1
+    network = TensorFlowTowLayerNetWork(input_size=img_size, hidden_size=128,  output_size=7)
+    batch_size = 100
+    iters_num = 1000
+    train_size = len(x_img)
+    epoch = max(1, train_size // batch_size)
+    # epoch = 80
+    
+    if not network.is_load:
+        history = network.train(x_img, x_label, batch_size=batch_size, epochs=epoch)
+    acc = network.accuracy(x_test=t_img, y_test=t_label)
+    print(acc)
+
+import random
+
+def subset(alist, idxs):
+    '''
+        用法: 根据下标idxs取出列表alist的子集
+        alist: list
+        idxs: list
+    '''
+    sub_list = []
+    for idx in idxs:
+        sub_list.append(alist[idx])
+
+    return sub_list
+
+def split_list(alist, group_num=4, shuffle=True, retain_left=False):
+    '''
+        用法: 将alist切分成group个子列表，每个子列表里面有len(alist)//group个元素
+        shuffle: 表示是否要随机切分列表，默认为True
+        retain_left: 若将列表alist分成group_num个子列表后还要剩余，是否将剩余的元素单独作为一组
+    '''
+
+    index = list(range(len(alist))) # 保留下标
+
+    # 是否打乱列表
+    if shuffle: 
+        random.shuffle(index) 
+    
+    elem_num = len(alist) // group_num # 每一个子列表所含有的元素数量
+    sub_lists = {}
+    
+    # 取出每一个子列表所包含的元素，存入字典中
+    for idx in range(group_num):
+        start, end = idx*elem_num, (idx+1)*elem_num
+        sub_lists['set'+str(idx)] = subset(alist, index[start:end])
+    
+    # 是否将最后剩余的元素作为单独的一组
+    if retain_left and group_num * elem_num != len(index): # 列表元素数量未能整除子列表数，需要将最后那一部分元素单独作为新的列表
+        sub_lists['set'+str(idx+1)] = subset(alist, index[end:])
+    
+    return sub_lists
+
 if __name__ == '__main__':
+    fetch_dataset()
     # simple_test_fer2013()
-    simple_test_weight()
+    # simple_test_weight()
+
+    tensor_test_fer2013()
+    

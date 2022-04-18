@@ -1,3 +1,8 @@
 dataset/mnist/*
 dataset/fer2013/*
 weight/*
+model/*
+log/*
+temp/*
+tensor/*
+*/__pycache__
